@@ -1,0 +1,28 @@
+{
+  "name": "moment.period",
+  "version": "1.0.0",
+  "homepage": "https://github.com/grabcode/moment.period",
+  "authors": [
+    "alex <googirard.alex@gmail.com>"
+  ],
+  "description": "Humanize your date ranges and vice-versa",
+  "main": "dist/period.js",
+  "dependencies": {
+    "moment": "*"
+  },
+  "keywords": [
+    "moment",
+    "period",
+    "date",
+    "range",
+    "humanize"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
