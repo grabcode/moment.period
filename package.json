@@ -1,0 +1,29 @@
+{
+  "name": "moment.period",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/period.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha -R dot test/period.spec.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/grabcode/moment.period.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/grabcode/moment.period/issues"
+  },
+  "homepage": "https://github.com/grabcode/moment.period",
+  "devDependencies": {
+    "chai": "^3.3.0",
+    "coffee-script": "^1.10.0",
+    "mocha": "^2.3.3",
+    "moment": ">= 2.10.0",
+    "uglifyjs": "^2.4.10"
+  }
+}
