@@ -15,9 +15,7 @@ build: directories
 
 	@uglifyjs -o dist/period.min.js dist/period.js
 
-	# @$(seder) "s/  \"version\": [0-9.:\",]*/  \"version\": \"${VER}\",/g" bower.json
-	# @$(seder) "s/  \"version\": [0-9.:\",]*/  \"version\": \"${VER}\",/g" component.json
-	# @$(seder) "s/  version: [0-9.:\",]*/  version: \"${VER}\",/g" package.js
+	@$(seder) "s/  \"version\": [0-9.:\",]*/  \"version\": \"${VER}\",/g" bower.json
 
 configure:
 	@npm install

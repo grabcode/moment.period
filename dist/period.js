@@ -95,7 +95,7 @@
           throw new Error("Missing settings");
         }
         if ((params.label != null) && (params.dates != null)) {
-          throw new Error("Invalid parameters to set. Do not provide label and dates.");
+          throw new Error("Invalid parameters to set. \n Do not provide label and dates.");
         } else if (params.label != null) {
           this.label = params.label;
           this.dates = this._getDatesFromLabel(this.label);
@@ -128,7 +128,7 @@
         for (label in this.labels) {
           dates = this._getDatesFromLabel(label);
           if (dates[1] != null) {
-            results.push(this._cache[this._buildCacheKey([new Date(dates[0]), new Date(dates[1])])] = label);
+            results.push(this._cache[this._buildCacheKey(dates)] = label);
           } else {
             results.push(this._cache[this._buildCacheKey(new Date(dates[0]))] = label);
           }
@@ -159,7 +159,8 @@
           case 'LAST_MONTH':
             lastMonth = (endDate.getMonth() - 1) % 12;
             startDate.setMonth(lastMonth);
-            endDate = moment(endDate.setMonth(lastMonth)).endOf('month').toDate();
+            endDate.setMonth(lastMonth);
+            endDate = moment(endDate).endOf('month').toDate();
             break;
           case 'CURRENT_FINANCIAL_YEAR':
             startDate.setFullYear(this._getCurrentFinancialYear());

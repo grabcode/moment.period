@@ -27,8 +27,8 @@ factory = (moment) ->
     constructor: (start, end, settings={})->
       @settings =
         base                 : 12
-        reference            : new Date() #date of reference
-        startOfFinancialYear : 1 #start of financial year month, index 1 (january=1)
+        reference            : new Date()
+        startOfFinancialYear : 1 #financial year starting month. 1 is january
 
       if typeof start is "string"
         throw new Error("Invalid period label") unless @labels[start]?
@@ -60,13 +60,16 @@ factory = (moment) ->
       if params.settings
         @settings = _.extend(@settings, params.settings)
 
-      if @settings.reference? and @settings.startOfFinancialYear? and @settings.base?
+      if @settings.reference? and
+      @settings.startOfFinancialYear? and
+      @settings.base?
         @_loadCache()
       else
         throw new Error("Missing settings")
 
       if params.label? and params.dates?
-        throw new Error("Invalid parameters to set. Do not provide label and dates.")
+        throw new Error("Invalid parameters to set.
+        \n Do not provide label and dates.")
       else if params.label?
         @label = params.label
         @dates   = @_getDatesFromLabel(@label)
@@ -94,7 +97,7 @@ factory = (moment) ->
       for label of @labels
         dates = @_getDatesFromLabel(label)
         if dates[1]?
-          @_cache[@_buildCacheKey([new Date(dates[0]), new Date(dates[1])])] = label
+          @_cache[@_buildCacheKey(dates)] = label
         else
           @_cache[ @_buildCacheKey( new Date(dates[0]) ) ] = label
 
@@ -121,23 +124,28 @@ factory = (moment) ->
         when 'LAST_MONTH'
           lastMonth = (endDate.getMonth()-1)%12
           startDate.setMonth(lastMonth)
-          endDate = moment( endDate.setMonth(lastMonth) ).endOf('month').toDate()
+          endDate.setMonth(lastMonth)
+          endDate = moment(endDate).endOf('month').toDate()
 
         when 'CURRENT_FINANCIAL_YEAR'
           startDate.setFullYear @_getCurrentFinancialYear()
           startDate.setMonth @settings.startOfFinancialYear - 1
-          endDate = moment(startDate).add(1, 'years').add(-1, 'days').endOf('day').toDate()
+          endDate = moment(startDate).add(1, 'years').add(-1, 'days')
+                    .endOf('day').toDate()
 
         when 'LAST_FINANCIAL_YEAR'
           startDate.setFullYear( @_getCurrentFinancialYear() - 1 )
           startDate.setMonth @settings.startOfFinancialYear - 1
-          endDate = moment(startDate).add(1, 'years').add(-1, 'days').endOf('day').toDate()
+          endDate = moment(startDate).add(1, 'years').add(-1, 'days')
+                    .endOf('day').toDate()
 
         when 'CURRENT_QUARTER'
-          return @_getQuarterDates( @_getCurrentQuarterIndex(), startDate, endDate )
+          return @_getQuarterDates( @_getCurrentQuarterIndex(), startDate,
+                  endDate )
 
         when 'LAST_QUARTER'
-          return @_getQuarterDates( @_getCurrentQuarterIndex() - 1, startDate, endDate )
+          return @_getQuarterDates( @_getCurrentQuarterIndex() - 1, startDate,
+                  endDate )
 
       [startDate, endDate]
 
@@ -167,7 +175,8 @@ factory = (moment) ->
 
     _buildCacheKey: (param)->
       if _.isArray(param)
-        param[0].getTime() + '-' + moment(param[1]).endOf('day').toDate().getTime()
+        param[0].getTime() + '-' + moment(param[1]).endOf('day')
+        .toDate().getTime()
       else
         param.getTime()
 
@@ -200,7 +209,8 @@ factory = (moment) ->
       startDate.setMonth @settings.startOfFinancialYear - 1
 
       startDate = moment(startDate).add( (index-1)*3 , 'months')
-      endDate   = moment(startDate).add(3, 'months').add(-1, 'days').endOf('day')
+      endDate   = moment(startDate).add(3, 'months').add(-1, 'days')
+                  .endOf('day')
 
       [startDate.toDate(), endDate.toDate()]
 

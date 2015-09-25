@@ -1,0 +1,19 @@
+sudo: false
+language: node_js
+
+node_js:
+  - 0.10
+  - 0.12
+
+before_install:
+  - make configure
+
+script:
+  - make test
+  - make lint
+  - make coveralls
+
+branches:
+  except:
+    - docs
+    - gh-pages

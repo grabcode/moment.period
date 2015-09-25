@@ -57,19 +57,19 @@ test = (moment, Period) ->
           throwError = ->
             period = moment().period('CURRENT_MONTH')
 
-          chai.expect(throwError).to.throw(Error, "Wrong parameters");
+          chai.expect(throwError).to.throw(Error, "Wrong parameters")
 
         it "when invalid moment provided", ->
           throwError = ->
             period = moment().period('123123')
 
-          chai.expect(throwError).to.throw(Error, "Wrong parameters");
+          chai.expect(throwError).to.throw(Error, "Wrong parameters")
 
         it "on invalid label", ->
           throwError = ->
             period = moment.period('LNENFNLEL')
 
-          chai.expect(throwError).to.throw(Error, "Invalid period label");
+          chai.expect(throwError).to.throw(Error, "Invalid period label")
 
     describe 'settings', ->
 
@@ -78,7 +78,7 @@ test = (moment, Period) ->
         chai.expect(period.settings.startOfFinancialYear).to.equal 3
 
       it "are considered in dates computation", ->
-        period = moment.period('CURRENT_MONTH', reference: '02/10/2016'.toDate() )
+        period = moment.period('CURRENT_MONTH', reference:'02/10/2016'.toDate())
         dates  = period.toDates()
         chai.expect(dates[0].getMonth()).to.equal 9
         chai.expect(dates[0].getFullYear()).to.equal 2016
@@ -112,19 +112,19 @@ test = (moment, Period) ->
               label: 'CURRENT_MONTH'
               dates: [new Date(), new Date()]
 
-          chai.expect(throwError).to.throw(Error, /Invalid parameters to set/);
+          chai.expect(throwError).to.throw(Error, /Invalid parameters to set/)
 
         it "when no params provided", ->
           throwError = ->
             period = moment().period().set()
 
-          chai.expect(throwError).to.throw(Error, "No parameters to set");
+          chai.expect(throwError).to.throw(Error, "No parameters to set")
 
         it "when no params provided", ->
           throwError = ->
             period = moment().period().set(settings: {reference: null})
 
-          chai.expect(throwError).to.throw(Error, "Missing settings");
+          chai.expect(throwError).to.throw(Error, "Missing settings")
 
     describe "financial year", ->
 
@@ -138,10 +138,13 @@ test = (moment, Period) ->
         labelDates = args[3]
         for label, dateAsString of labelDates
           moments = period.set(label: label).toMoments()
-          chai.expect( moments[0].format(defaultFormat) ).to.equal dateAsString[0]
-          chai.expect( moments[1].format(defaultFormat) ).to.equal dateAsString[1]
+          chai.expect( moments[0].format(defaultFormat) )
+          .to.equal dateAsString[0]
+          chai.expect( moments[1].format(defaultFormat) )
+          .to.equal dateAsString[1]
 
-          periodFromDates = moment(dateAsString[0].toDate()).period(dateAsString[1].toDate(), @settings)
+          periodFromDates = moment(dateAsString[0].toDate())
+                            .period(dateAsString[1].toDate(), @settings)
           chai.expect( periodFromDates.toString() ).to.equal label
 
       describe "starts in july", ->
